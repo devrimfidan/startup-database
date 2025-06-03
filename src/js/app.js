@@ -306,8 +306,10 @@ class CambridgeStartups {
             return;
         }
 
-        // Show stats
+        // Generate stats
         const stats = this.generateStats(companies);
+        
+        // Create HTML with stats first
         let html = `
             <div class="stats">
                 <div class="stat-card">
@@ -330,7 +332,7 @@ class CambridgeStartups {
         document.getElementById('prevPage').disabled = this.currentPage <= 1;
         document.getElementById('nextPage').disabled = this.currentPage >= this.totalPages;
 
-        // Display companies based on current view
+        // Then add the company display - either grid or table view
         if (this.currentView === 'grid') {
             html += this.renderGridView(companies);
         } else {
