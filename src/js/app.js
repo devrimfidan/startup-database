@@ -309,20 +309,22 @@ class CambridgeStartups {
         // Generate stats
         const stats = this.generateStats(companies);
         
-        // Create HTML with stats first
+        // Create HTML with stats in a separate container first
         let html = `
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number">${companies.length}</div>
-                    <div class="stat-label">Companies Found</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.activeCount}</div>
-                    <div class="stat-label">Active Companies</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.recentCount}</div>
-                    <div class="stat-label">Incorporated in Last 5 Years</div>
+            <div class="stats-container">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">${companies.length}</div>
+                        <div class="stat-label">Companies Found</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.activeCount}</div>
+                        <div class="stat-label">Active Companies</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.recentCount}</div>
+                        <div class="stat-label">Incorporated in Last 5 Years</div>
+                    </div>
                 </div>
             </div>
         `;

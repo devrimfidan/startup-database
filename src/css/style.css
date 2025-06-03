@@ -797,12 +797,22 @@ body {
 }
 
 /* Update stats display to be shown above results */
+.stats-container {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  margin-bottom: 2rem;
   width: 100%;
+}
+
+@media all and (max-width: 768px) {
+  .stats {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .stat-card {
@@ -815,7 +825,7 @@ body {
 }
 
 .stat-card:hover {
-  transform: translateY(-0.5rem);
+  transform: translateY(-0.25rem);
   box-shadow: 0 3px 0 var(--color-links-primary);
 }
 
@@ -829,6 +839,11 @@ body {
   color: var(--color-text-primary);
   margin-top: 5px;
   font-size: 0.9rem;
+}
+
+/* Create clear separation between stats and company grid */
+.company-grid {
+  margin-top: 1.5rem;
 }
 
 /* Pagination */
@@ -934,21 +949,22 @@ body {
   }
 }
 
-/* Attribution section - updated for left alignment */
+/* Attribution section - made smaller */
 .attribution {
-  margin-top: 2rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   text-align: left;
-  font-size: 0.9rem;
-  opacity: 0.8;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  width: 100%;
 }
 
 .attribution p {
   max-width: none;
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.4;
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
@@ -965,4 +981,173 @@ body {
 .attribution a:focus {
   background-color: var(--palette-6);
   color: var(--color-text-primary);
+}
+
+@media (max-width: 768px) {
+  .attribution {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .attribution p {
+    font-size: 0.75rem;
+  }
+}
+
+/* Terms and conditions page styles */
+.content-outer {
+  padding: 2rem 0;
+}
+
+.content-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.content-header h1 {
+  font-size: 2rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.content-body {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.last-updated {
+  display: inline-block;
+  background: var(--color-bg-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: var(--color-text-primary);
+}
+
+.terms-section {
+  margin-bottom: 2.5rem;
+}
+
+.terms-section h2 {
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border-primary);
+  padding-bottom: 0.5rem;
+}
+
+.terms-section p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.terms-section ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.terms-section li {
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+.content-footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-links-primary);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn:hover {
+  background-color: var(--palette-1);
+  transform: translateY(-2px);
+}
+
+.link {
+  color: var(--color-links-primary);
+  text-decoration: underline;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+/* Mark active navigation item */
+.header-nav-item.active {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  font-weight: bold;
+}
+
+/* Add these styles for the privacy policy page */
+.highlight-box {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: 6px;
+  padding: 15px;
+  margin: 15px 0 30px 0;
+  font-size: 1.05rem;
+}
+
+.gdpr-rights {
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 20px 25px;
+  margin: 25px 0;
+}
+
+.contact-info {
+  background: #f9f9f9;
+  padding: 25px;
+  border-radius: 6px;
+  border-left: 4px solid var(--color-links-primary);
+  margin-top: 40px;
+}
+
+.terms-section {
+  margin-bottom: 2.5rem;
+}
+
+.terms-section h2 {
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border-primary);
+  padding-bottom: 0.5rem;
+}
+
+.terms-section p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.terms-section ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.terms-section li {
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+/* Make sure the privacy page is responsive */
+@media (max-width: 768px) {
+  .gdpr-rights {
+    padding: 15px;
+  }
+  
+  .contact-info {
+    padding: 15px;
+  }
 }
