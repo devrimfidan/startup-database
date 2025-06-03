@@ -35,6 +35,17 @@ class CambridgeStartups {
             document.getElementById('apiKey').value = savedApiKey;
             this.apiKey = savedApiKey;
         }
+        
+        // Add event listeners for quick search links
+        const quickSearchLinks = document.querySelectorAll('.banner-nav .banner-nav-item');
+        quickSearchLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const searchText = e.target.textContent.trim();
+                document.getElementById('searchQuery').value = searchText;
+                this.searchCompanies();
+            });
+        });
 
         // Advanced options toggle
         document.getElementById('showAdvancedBtn').addEventListener('click', () => this.toggleAdvancedPanel());
