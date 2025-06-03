@@ -1,7 +1,7 @@
 class CambridgeStartups {
     constructor() {
-        this.apiKey = '';
-        this.baseUrl = 'https://cambridge-startups-proxy.eminfidan.workers.dev';
+        // Remove API key from client side
+        this.baseUrl = 'https://cambridge-startups-proxy.eminfidan.workers.dev'; // Replace with your worker URL
         this.currentPage = 1;
         this.totalPages = 1;
         this.itemsPerPage = 20;
@@ -31,17 +31,13 @@ class CambridgeStartups {
         document.getElementById('searchQuery').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.searchCompanies();
         });
-        document.getElementById('apiKey').addEventListener('input', (e) => {
-            this.apiKey = e.target.value;
-            localStorage.setItem('ch_api_key', e.target.value);
-        });
-
-        // Load API key from localStorage if available
-        const savedApiKey = localStorage.getItem('ch_api_key');
-        if (savedApiKey) {
-            document.getElementById('apiKey').value = savedApiKey;
-            this.apiKey = savedApiKey;
-        }
+        
+        // Remove API key related code
+        // const savedApiKey = localStorage.getItem('ch_api_key');
+        // if (savedApiKey) {
+        //     document.getElementById('apiKey').value = savedApiKey;
+        //     this.apiKey = savedApiKey;
+        // }
         
         // Add event listeners for quick search links
         const quickSearchLinks = document.querySelectorAll('.banner-nav .banner-nav-item');
@@ -117,19 +113,12 @@ class CambridgeStartups {
 
     async searchCompanies(page = 1) {
         const query = document.getElementById('searchQuery').value.trim();
-        const apiKey = document.getElementById('apiKey').value.trim();
-
-        if (!apiKey) {
-            this.showError('Please enter your Companies House API key first.');
-            return;
-        }
 
         if (!query) {
             this.showError('Please enter a search term.');
             return;
         }
 
-        this.apiKey = apiKey;
         this.currentPage = page;
         this.showLoading();
 
@@ -155,18 +144,11 @@ class CambridgeStartups {
 
     async fetchCompanies(query) {
         const start_index = (this.currentPage - 1) * this.itemsPerPage;
-        const searchUrl = `${this.baseUrl}/search/companies?q=${encodeURIComponent(query)}&items_per_page=${this.itemsPerPage}&start_index=${start_index}`;
+        const searchUrl = `${this.baseUrl}/search?q=${encodeURIComponent(query)}&items_per_page=${this.itemsPerPage}&start_index=${start_index}`;
         
-        const response = await fetch(searchUrl, {
-            headers: {
-                'Authorization': `Basic ${btoa(this.apiKey + ':')}`
-            }
-        });
+        const response = await fetch(searchUrl);
 
         if (!response.ok) {
-            if (response.status === 401) {
-                throw new Error('Invalid API key. Please check your Companies House API key.');
-            }
             throw new Error(`API request failed: ${response.status}`);
         }
 
@@ -177,11 +159,7 @@ class CambridgeStartups {
         const detailUrl = `${this.baseUrl}/company/${companyNumber}`;
         
         try {
-            const response = await fetch(detailUrl, {
-                headers: {
-                    'Authorization': `Basic ${btoa(this.apiKey + ':')}`
-                }
-            });
+            const response = await fetch(detailUrl);
 
             if (response.ok) {
                 return await response.json();
