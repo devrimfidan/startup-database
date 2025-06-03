@@ -315,7 +315,7 @@ class CambridgeStartups {
         // Generate stats
         const stats = this.generateStats(companies);
         
-        // Display stats in the green section
+        // Display stats above the filters in company-results-outer
         statsContainer.style.display = 'block';
         statsContainer.innerHTML = `
             <div class="stats">
