@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambridge Startups Directory</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Cambridge Startups Directory</h1>
+            <p>Discover innovative companies in Cambridge using Companies House data</p>
+        </header>
+
+        <section class="search-section">
+            <div class="api-key-section">
+                <strong>API Key Required:</strong> You need a free Companies House API key. 
+                <a href="https://developer.company-information.service.gov.uk/" target="_blank">Get one here</a>
+                <input type="password" id="apiKey" class="api-key-input" placeholder="Enter your Companies House API key">
+            </div>
+
+            <div class="search-form">
+                <input type="text" id="searchQuery" class="search-input" placeholder="Search for companies (e.g., 'software', 'tech', 'cambridge')" value="cambridge">
+                <button id="searchBtn" class="search-btn">Search Companies</button>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <div id="results">
+                <div class="info">
+                    <strong>Getting Started:</strong>
+                    <ol>
+                        <li>Get a free API key from <a href="https://developer.company-information.service.gov.uk/" target="_blank">Companies House Developer Hub</a></li>
+                        <li>Enter your API key above</li>
+                        <li>Search for companies by name or keyword</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div>
+                <a href="terms-conditions.html">Terms & Conditions</a>
+                <span>|</span>
+                <a href="privacy-policy.html">Privacy Policy</a>
+            </div>
+            <p>© 2025 Cambridge Startups Directory. Data sourced from Companies House.</p>
+        </footer>
+    </div>
+
+    <script src="../js/app.js"></script>
+</body>
+</html>
