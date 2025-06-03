@@ -122,8 +122,31 @@ body {
   margin-bottom: -20px;
   height: 100px;
 }
+
 .logo img {
   max-height: 100%;
+}
+
+/* Keep these text logo styles for potential future use */
+.text-logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.text-logo:hover, 
+.text-logo:focus {
+  color: var(--color-links-primary);
+}
+
+@media all and (min-width: 1000px) {
+  .text-logo {
+    font-size: 1.6rem;
+  }
 }
 
 .header-nav {
@@ -888,4 +911,37 @@ body {
   .company-table td {
     padding: 8px 5px;
   }
+}
+
+/* Attribution section - updated for left alignment */
+.attribution {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: left;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.attribution p {
+  max-width: none;
+  margin: 0;
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.attribution a {
+  font-weight: 400;
+  text-decoration: none;
+  white-space: normal;
+  display: inline-block;
+}
+
+.attribution a:hover, 
+.attribution a:focus {
+  background-color: var(--palette-6);
+  color: var(--color-text-primary);
 }
