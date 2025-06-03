@@ -277,13 +277,24 @@ body {
 }
 
 .banner-title {
-  font-size: 1.75rem;
-  line-height: 1.125;
+  font-size: 2.25rem;
+  line-height: 1.2;
+  max-width: none;
+  white-space: nowrap;
+  overflow: visible;
+  margin-bottom: 0.75rem;
 }
 @media all and (min-width: 1000px) {
   .banner-title {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
+}
+
+.banner-subtitle {
+  font-size: 1.3rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.5rem;
+  max-width: 800px;
 }
 
 .banner-search {
@@ -380,10 +391,11 @@ body {
   font-size: 1.75rem;
   line-height: 1.25;
   text-align: center;
+  margin-bottom: 2.5rem; /* Increased from default */
 }
 
 .services {
-  margin-top: 1.5rem;
+  margin-top: 2.5rem; /* Increased from 1.5rem */
 }
 
 .services-list {
@@ -866,4 +878,165 @@ body {
   margin-bottom: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+/* Make sure resource grid uses 4 columns consistently */
+.news-outer .company-grid,
+.news-outer .resource-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+@media all and (min-width: 600px) {
+  .news-outer .company-grid,
+  .news-outer .resource-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media all and (min-width: 900px) {
+  .news-outer .company-grid,
+  .news-outer .resource-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media all and (min-width: 1200px) {
+  .news-outer .company-grid,
+  .news-outer .resource-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Fix newsletter styling in services-outer section */
+.services-form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.newsletter-form {
+  background-color: var(--color-bg-primary);
+  padding: 2rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  display: flex;
+  margin-bottom: 1rem;
+  gap: 10px; /* Added gap between items */
+}
+
+.newsletter-input {
+  flex-grow: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border-primary);
+  border-right: none;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  font-size: 1rem;
+  margin-right: 5px; /* Added spacing */
+}
+
+.newsletter-button {
+  background-color: var(--color-links-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 4px; /* Changed from only right side radius */
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-left: 5px; /* Added spacing */
+}
+
+.form-notice {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* Fix section-title in news-outer */
+.news-outer .section-title {
+  color: var(--color-text-primary);
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border-primary);
+  padding-bottom: 0.5rem;
+}
+
+/* Services description styling */
+.services-description {
+  text-align: center;
+  max-width: 800px;
+  margin: 1rem auto;
+  color: var(--color-text-primary); /* Changed from white to primary text color */
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 500; /* Added for better visibility */
+}
+
+/* Make sure company cards have consistent height */
+.company-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.company-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.company-details p {
+  flex-grow: 1;
+}
+
+/* Attribution section styling */
+.attribution {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: left;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  width: 100%;
+}
+
+.attribution p {
+  max-width: none;
+  margin: 0;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.attribution a {
+  font-weight: 400;
+  text-decoration: none;
+  white-space: normal;
+  display: inline-block;
+}
+
+.attribution a:hover, 
+.attribution a:focus {
+  background-color: var(--palette-6);
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 768px) {
+  .attribution {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .attribution p {
+    font-size: 0.75rem;
+  }
 }
