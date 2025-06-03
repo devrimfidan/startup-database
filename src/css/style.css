@@ -745,27 +745,19 @@ body {
 /* Company Grid View - updated for 4 columns with more spacing */
 .company-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  margin-top: 2rem;
-  width: 100%;
 }
 
-@media all and (min-width: 600px) {
+@media (max-width: 1024px) {
   .company-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media all and (min-width: 900px) {
+@media (max-width: 640px) {
   .company-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media all and (min-width: 1200px) {
-  .company-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1030,13 +1022,55 @@ body {
   color: var(--color-text-primary);
 }
 
-@media (max-width: 768px) {
-  .attribution {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-  
-  .attribution p {
-    font-size: 0.75rem;
-  }
+/* Enhanced table styling */
+.company-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.company-table th {
+  background-color: #f5f7fa;
+  padding: 1rem;
+  text-align: left;
+  border: 1px solid #e1e4e8;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.company-table th:hover {
+  background-color: #edf2f7;
+}
+
+.company-table th::after {
+  content: "⇕";
+  opacity: 0.3;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+.company-table th.sorted-asc::after {
+  content: "↑";
+  opacity: 1;
+}
+
+.company-table th.sorted-desc::after {
+  content: "↓";
+  opacity: 1;
+}
+
+.company-table td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e1e4e8;
+  vertical-align: top;
+}
+
+.company-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.company-table tr:hover {
+  background-color: #f0f7ff;
 }

@@ -8,7 +8,14 @@ class CambridgeStartups {
         this.currentView = 'grid';
         this.companies = [];
         this.sortField = 'relevance';
-        this.sortDirection = 'desc';
+        
+        // Add event listener for table header sorting
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'TH' && e.target.dataset.sort) {
+                this.handleTableSort(e.target.dataset.sort);
+            }
+        });
+        
         this.filters = {
             status: 'all',
             type: 'all',
@@ -273,26 +280,71 @@ class CambridgeStartups {
         this.displayCompanies(filteredCompanies);
     }
 
-    sortCompanies(companies = this.companies) {
+    handleTableSort(field) {
+        // Toggle sort direction if clicking the same field
+        if (this.sortField.startsWith(field)) {
+            // For name and status fields
+            if (field === 'name') {
+                this.sortField = this.sortField === 'name-asc' ? 'name-desc' : 'name-asc';
+            } 
+            // For incorporated field
+            else if (field === 'incorporated') {
+                this.sortField = this.sortField === 'incorporated-newest' ? 'incorporated-oldest' : 'incorporated-newest';
+            }
+            // For status field
+            else if (field === 'status') {
+                this.sortField = this.sortField === 'status-active' ? 'status-dissolved' : 'status-active';
+            }
+        } 
+        // Set default sort direction for first click
+        else {
+            if (field === 'name') {
+                this.sortField = 'name-asc';
+            } else if (field === 'incorporated') {
+                this.sortField = 'incorporated-newest';
+            } else if (field === 'status') {
+                this.sortField = 'status-active';
+            }
+        }
+        
+        // Update the sort dropdown to match
+        const sortSelect = document.getElementById('sortBy');
+        if (sortSelect && sortSelect.querySelector(`option[value="${this.sortField}"]`)) {
+            sortSelect.value = this.sortField;
+        }
+        
+        // Apply sorting and refresh display
+        this.sortCompanies();
+        this.displayCompanies(this.filteredCompanies || this.companies);
+    }
+
+    sortCompanies(companies = this.filteredCompanies || this.companies) {
         const [field, direction] = this.sortField.split('-');
         
         return companies.sort((a, b) => {
             switch (field) {
                 case 'name':
-                    const nameA = a.title.toLowerCase();
-                    const nameB = b.title.toLowerCase();
                     return direction === 'asc' 
-                        ? nameA.localeCompare(nameB)
-                        : nameB.localeCompare(nameA);
+                        ? a.title.localeCompare(b.title) 
+                        : b.title.localeCompare(a.title);
                 
                 case 'incorporated':
-                    const dateA = a.date_of_creation ? new Date(a.date_of_creation).getTime() : 0;
-                    const dateB = b.date_of_creation ? new Date(b.date_of_creation).getTime() : 0;
+                    const dateA = a.date_of_creation ? new Date(a.date_of_creation) : new Date(0);
+                    const dateB = b.date_of_creation ? new Date(b.date_of_creation) : new Date(0);
                     return direction === 'newest' 
-                        ? dateB - dateA
+                        ? dateB - dateA 
                         : dateA - dateB;
-                    
-                default: // relevance is the default from API
+                
+                case 'status':
+                    if (direction === 'active') {
+                        return a.company_status === 'active' ? -1 : 1;
+                    } else {
+                        return a.company_status === 'dissolved' ? -1 : 1;
+                    }
+                
+                case 'relevance':
+                default:
+                    // Keep existing order for relevance or unknown fields
                     return 0;
             }
         });
@@ -357,43 +409,42 @@ class CambridgeStartups {
 
     renderTableView(companies) {
         let html = `
-            <div class="table-container">
-                <table class="company-table">
-                    <thead>
-                        <tr>
-                            <th>Company Name</th>
-                            <th>Company Number</th>
-                            <th>Status</th>
-                            <th>Type</th>
-                            <th>Incorporated</th>
-                            <th>Address</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-        
-        for (const company of companies) {
-            const statusClass = company.company_status === 'active' ? 'status-active' : 'status-dissolved';
-            const incorporationDate = company.date_of_creation ? new Date(company.date_of_creation).toLocaleDateString() : 'N/A';
+        <table class="company-table">
+            <thead>
+                <tr>
+                    <th data-sort="name" class="${this.sortField.startsWith('name') ? `sorted-${this.sortField.endsWith('asc') ? 'asc' : 'desc'}` : ''}">Company Name</th>
+                    <th data-sort="number">Company Number</th>
+                    <th data-sort="address">Address</th>
+                    <th data-sort="type">Type</th>
+                    <th data-sort="incorporated" class="${this.sortField.startsWith('incorporated') ? `sorted-${this.sortField.endsWith('newest') ? 'desc' : 'asc'}` : ''}">Incorporated</th>
+                    <th data-sort="status" class="${this.sortField === 'status-active' ? 'sorted-asc' : this.sortField === 'status-dissolved' ? 'sorted-desc' : ''}">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+        companies.forEach(company => {
+            const statusClass = company.company_status === 'active' ? 'status-active' : 'status-inactive';
             
             html += `
                 <tr>
-                    <td><strong>${this.escapeHtml(company.title)}</strong></td>
-                    <td>${company.company_number}</td>
-                    <td class="${statusClass}">${this.capitalizeFirst(company.company_status || 'Unknown')}</td>
-                    <td>${this.capitalizeFirst(company.company_type || 'N/A')}</td>
-                    <td>${incorporationDate}</td>
-                    <td>${company.address ? this.formatAddress(company.address) : 'N/A'}</td>
+                    <td>
+                        <a href="#" class="company-link" data-company="${this.escapeHtml(company.company_number)}">${this.escapeHtml(company.title)}</a>
+                    </td>
+                    <td>${this.escapeHtml(company.company_number)}</td>
+                    <td>${company.address_snippet ? this.escapeHtml(company.address_snippet) : 'Not available'}</td>
+                    <td>${this.capitalizeFirst(company.company_type)}</td>
+                    <td>${company.date_of_creation ? new Date(company.date_of_creation).toLocaleDateString() : 'Unknown'}</td>
+                    <td><span class="status-badge ${statusClass}">${this.capitalizeFirst(company.company_status)}</span></td>
                 </tr>
             `;
-        }
-        
+        });
+
         html += `
-                    </tbody>
-                </table>
-            </div>
-        `;
-        
+            </tbody>
+        </table>
+    `;
+
         return html;
     }
 
