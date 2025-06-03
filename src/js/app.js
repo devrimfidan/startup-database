@@ -300,14 +300,8 @@ class CambridgeStartups {
 
     async displayCompanies(companies) {
         const resultsDiv = document.getElementById('results');
-        const statsContainer = document.getElementById('stats-container');
-        const controlsBar = document.getElementById('controlsBar');
-        const pagination = document.getElementById('pagination');
 
         if (companies.length === 0) {
-            statsContainer.style.display = 'none';
-            controlsBar.style.display = 'none';
-            pagination.style.display = 'none';
             resultsDiv.innerHTML = '<div class="info">No companies found. Try a different search term or adjust your filters.</div>';
             return;
         }
@@ -315,40 +309,36 @@ class CambridgeStartups {
         // Generate stats
         const stats = this.generateStats(companies);
         
-        // Display stats above the filters in company-results-outer
-        statsContainer.style.display = 'block';
-        statsContainer.innerHTML = `
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number">${companies.length}</div>
-                    <div class="stat-label">Companies Found</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.activeCount}</div>
-                    <div class="stat-label">Active Companies</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.recentCount}</div>
-                    <div class="stat-label">Incorporated in Last 5 Years</div>
+        // Create HTML with stats in a separate container first
+        let html = `
+            <div class="stats-container">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">${companies.length}</div>
+                        <div class="stat-label">Companies Found</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.activeCount}</div>
+                        <div class="stat-label">Active Companies</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.recentCount}</div>
+                        <div class="stat-label">Incorporated in Last 5 Years</div>
+                    </div>
                 </div>
             </div>
         `;
-
-        // Show controls and pagination
-        controlsBar.style.display = 'flex';
-        pagination.style.display = 'flex';
 
         // Update pagination info
         document.getElementById('pageInfo').textContent = `Page ${this.currentPage} of ${this.totalPages}`;
         document.getElementById('prevPage').disabled = this.currentPage <= 1;
         document.getElementById('nextPage').disabled = this.currentPage >= this.totalPages;
 
-        // Display company results in the white section
-        let html = '';
+        // Then add the company display - either grid or table view
         if (this.currentView === 'grid') {
-            html = this.renderGridView(companies);
+            html += this.renderGridView(companies);
         } else {
-            html = this.renderTableView(companies);
+            html += this.renderTableView(companies);
         }
 
         resultsDiv.innerHTML = html;
