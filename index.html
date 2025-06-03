@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -55,6 +55,22 @@
             margin-bottom: 30px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
+        }
+
+        .api-key-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .api-key-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 10px;
         }
 
         .search-form {
@@ -103,20 +119,120 @@
             transform: none;
         }
 
-        .api-key-section {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
+        .filters-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .api-key-input {
-            width: 100%;
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
             padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-top: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .controls-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .controls-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .view-btn {
+            padding: 8px 12px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .view-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .view-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .records-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pagination-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .pagination-btn {
+            padding: 10px 15px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: #667eea;
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination-info {
+            font-weight: 600;
+            color: #666;
         }
 
         .results-section {
@@ -222,6 +338,54 @@
             font-weight: 600;
         }
 
+        /* Table View Styles */
+        .company-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .company-table th:hover {
+            background: #5a6fd8;
+        }
+
+        .company-table th.sortable::after {
+            content: ' ↕';
+            opacity: 0.5;
+        }
+
+        .company-table th.sort-desc::after {
+            content: ' ↓';
+            opacity: 1;
+        }
+
+        .company-table th.sort-asc::after {
+            content: ' ↑';
+            opacity: 1;
+        }
+
+        .company-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .company-table tr:hover {
+            background: #f8f9fa;
+        }
+
         .error {
             background: #f8d7da;
             color: #721c24;
@@ -276,6 +440,24 @@
             .header h1 {
                 font-size: 2rem;
             }
+
+            .controls-top {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .view-controls {
+                justify-content: center;
+            }
+
+            .company-table {
+                font-size: 14px;
+            }
+
+            .company-table th,
+            .company-table td {
+                padding: 8px;
+            }
         }
     </style>
 </head>
@@ -297,6 +479,69 @@
                 <input type="text" id="searchQuery" class="search-input" placeholder="Search for companies (e.g., 'software', 'tech', 'cambridge')" value="cambridge">
                 <button id="searchBtn" class="search-btn">Search Companies</button>
             </div>
+
+            <div class="filters-section">
+                <div class="filter-group">
+                    <label class="filter-label">Company Status</label>
+                    <select id="statusFilter" class="filter-select">
+                        <option value="">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="dissolved">Dissolved</option>
+                        <option value="liquidation">In Liquidation</option>
+                        <option value="receivership">In Receivership</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Company Type</label>
+                    <select id="typeFilter" class="filter-select">
+                        <option value="">All Types</option>
+                        <option value="ltd">Private Limited Company</option>
+                        <option value="plc">Public Limited Company</option>
+                        <option value="llp">Limited Liability Partnership</option>
+                        <option value="cic-limited">Community Interest Company</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Sort By</label>
+                    <select id="sortFilter" class="filter-select">
+                        <option value="relevance">Relevance</option>
+                        <option value="name">Company Name</option>
+                        <option value="date">Incorporation Date</option>
+                        <option value="status">Status</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Sort Order</label>
+                    <select id="sortOrder" class="filter-select">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-section" id="controlsSection" style="display: none;">
+            <div class="controls-top">
+                <div class="view-controls">
+                    <span style="font-weight: 600; margin-right: 10px;">View:</span>
+                    <button class="view-btn active" data-view="grid">📱 Cards</button>
+                    <button class="view-btn" data-view="table">📊 Table</button>
+                </div>
+                <div class="records-control">
+                    <span style="font-weight: 600;">Show:</span>
+                    <select id="recordsPerPage" class="filter-select">
+                        <option value="20">20 records</option>
+                        <option value="50">50 records</option>
+                        <option value="100">100 records</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="pagination-section">
+                <button class="pagination-btn" id="prevBtn">← Previous</button>
+                <span class="pagination-info" id="paginationInfo">Page 1 of 1</span>
+                <button class="pagination-btn" id="nextBtn">Next →</button>
+            </div>
         </div>
 
         <div class="results-section">
@@ -307,6 +552,8 @@
                         <li>Get a free API key from <a href="https://developer.company-information.service.gov.uk/" target="_blank">Companies House Developer Hub</a></li>
                         <li>Enter your API key above</li>
                         <li>Search for companies by name or keyword</li>
+                        <li>Use filters to refine your results</li>
+                        <li>Switch between card and table views</li>
                     </ol>
                 </div>
             </div>
@@ -329,10 +576,19 @@
             constructor() {
                 this.apiKey = '';
                 this.baseUrl = 'https://api.company-information.service.gov.uk';
+                this.currentPage = 1;
+                this.recordsPerPage = 20;
+                this.totalResults = 0;
+                this.currentView = 'grid';
+                this.currentData = [];
+                this.currentQuery = '';
+                this.sortBy = 'relevance';
+                this.sortOrder = 'asc';
                 this.init();
             }
 
             init() {
+                // Search functionality
                 document.getElementById('searchBtn').addEventListener('click', () => this.searchCompanies());
                 document.getElementById('searchQuery').addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') this.searchCompanies();
@@ -340,6 +596,38 @@
                 document.getElementById('apiKey').addEventListener('input', (e) => {
                     this.apiKey = e.target.value;
                 });
+
+                // Filter controls
+                document.getElementById('statusFilter').addEventListener('change', () => this.applyFilters());
+                document.getElementById('typeFilter').addEventListener('change', () => this.applyFilters());
+                document.getElementById('sortFilter').addEventListener('change', (e) => {
+                    this.sortBy = e.target.value;
+                    this.sortData();
+                });
+                document.getElementById('sortOrder').addEventListener('change', (e) => {
+                    this.sortOrder = e.target.value;
+                    this.sortData();
+                });
+
+                // View controls
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.currentView = e.target.dataset.view;
+                        this.updateViewButtons();
+                        this.displayResults();
+                    });
+                });
+
+                // Records per page control
+                document.getElementById('recordsPerPage').addEventListener('change', (e) => {
+                    this.recordsPerPage = parseInt(e.target.value);
+                    this.currentPage = 1;
+                    this.searchCompanies();
+                });
+
+                // Pagination controls
+                document.getElementById('prevBtn').addEventListener('click', () => this.previousPage());
+                document.getElementById('nextBtn').addEventListener('click', () => this.nextPage());
             }
 
             async searchCompanies() {
@@ -357,18 +645,25 @@
                 }
 
                 this.apiKey = apiKey;
+                this.currentQuery = query;
+                this.currentPage = 1;
                 this.showLoading();
 
                 try {
-                    const companies = await this.fetchCompanies(query);
-                    await this.displayCompanies(companies);
+                    const result = await this.fetchCompanies(query, this.currentPage);
+                    this.currentData = result.companies;
+                    this.totalResults = result.total;
+                    this.applyFilters();
+                    document.getElementById('controlsSection').style.display = 'block';
                 } catch (error) {
                     this.showError(`Search failed: ${error.message}`);
+                    document.getElementById('controlsSection').style.display = 'none';
                 }
             }
 
-            async fetchCompanies(query) {
-                const searchUrl = `${this.baseUrl}/search/companies?q=${encodeURIComponent(query)}&items_per_page=20`;
+            async fetchCompanies(query, page = 1) {
+                const startIndex = (page - 1) * this.recordsPerPage;
+                const searchUrl = `${this.baseUrl}/search/companies?q=${encodeURIComponent(query)}&items_per_page=${this.recordsPerPage}&start_index=${startIndex}`;
                 
                 const response = await fetch(searchUrl, {
                     headers: {
@@ -384,43 +679,87 @@
                 }
 
                 const data = await response.json();
-                return data.items || [];
+                return {
+                    companies: data.items || [],
+                    total: data.total_results || 0
+                };
             }
 
-            async fetchCompanyDetails(companyNumber) {
-                const detailUrl = `${this.baseUrl}/company/${companyNumber}`;
-                
-                try {
-                    const response = await fetch(detailUrl, {
-                        headers: {
-                            'Authorization': `Basic ${btoa(this.apiKey + ':')}`
-                        }
-                    });
+            applyFilters() {
+                const statusFilter = document.getElementById('statusFilter').value;
+                const typeFilter = document.getElementById('typeFilter').value;
 
-                    if (response.ok) {
-                        return await response.json();
-                    }
-                } catch (error) {
-                    console.log('Could not fetch detailed info for', companyNumber);
+                let filteredData = [...this.currentData];
+
+                if (statusFilter) {
+                    filteredData = filteredData.filter(company => 
+                        company.company_status === statusFilter
+                    );
                 }
-                return null;
+
+                if (typeFilter) {
+                    filteredData = filteredData.filter(company => 
+                        company.company_type === typeFilter
+                    );
+                }
+
+                this.filteredData = filteredData;
+                this.sortData();
             }
 
-            async displayCompanies(companies) {
-                const resultsDiv = document.getElementById('results');
+            sortData() {
+                if (!this.filteredData) return;
 
-                if (companies.length === 0) {
-                    resultsDiv.innerHTML = '<div class="info">No companies found. Try a different search term.</div>';
+                const sortedData = [...this.filteredData];
+
+                sortedData.sort((a, b) => {
+                    let valueA, valueB;
+
+                    switch (this.sortBy) {
+                        case 'name':
+                            valueA = a.title?.toLowerCase() || '';
+                            valueB = b.title?.toLowerCase() || '';
+                            break;
+                        case 'date':
+                            valueA = new Date(a.date_of_creation || '1900-01-01');
+                            valueB = new Date(b.date_of_creation || '1900-01-01');
+                            break;
+                        case 'status':
+                            valueA = a.company_status || '';
+                            valueB = b.company_status || '';
+                            break;
+                        default: // relevance
+                            return 0;
+                    }
+
+                    if (valueA < valueB) return this.sortOrder === 'asc' ? -1 : 1;
+                    if (valueA > valueB) return this.sortOrder === 'asc' ? 1 : -1;
+                    return 0;
+                });
+
+                this.sortedData = sortedData;
+                this.displayResults();
+            }
+
+            displayResults() {
+                const data = this.sortedData || this.filteredData || this.currentData;
+                
+                if (data.length === 0) {
+                    document.getElementById('results').innerHTML = '<div class="info">No companies found matching your criteria. Try adjusting your filters.</div>';
                     return;
                 }
 
                 // Show stats
-                const stats = this.generateStats(companies);
+                const stats = this.generateStats(data);
                 let html = `
                     <div class="stats">
                         <div class="stat-card">
-                            <div class="stat-number">${companies.length}</div>
-                            <div class="stat-label">Companies Found</div>
+                            <div class="stat-number">${data.length}</div>
+                            <div class="stat-label">Companies Shown</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${this.totalResults}</div>
+                            <div class="stat-label">Total Results</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-number">${stats.activeCount}</div>
@@ -428,19 +767,24 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-number">${stats.recentCount}</div>
-                            <div class="stat-label">Incorporated in Last 5 Years</div>
+                            <div class="stat-label">Recent (5 Years)</div>
                         </div>
                     </div>
-                    <div class="company-grid">
                 `;
 
-                // Display companies
-                for (const company of companies) {
-                    html += this.createCompanyCard(company);
+                // Display based on current view
+                if (this.currentView === 'grid') {
+                    html += '<div class="company-grid">';
+                    data.forEach(company => {
+                        html += this.createCompanyCard(company);
+                    });
+                    html += '</div>';
+                } else {
+                    html += this.createCompanyTable(data);
                 }
 
-                html += '</div>';
-                resultsDiv.innerHTML = html;
+                document.getElementById('results').innerHTML = html;
+                this.updatePagination();
             }
 
             createCompanyCard(company) {
@@ -476,65 +820,71 @@
                 `;
             }
 
-            formatAddress(address) {
-                const parts = [];
-                if (address.address_line_1) parts.push(address.address_line_1);
-                if (address.locality) parts.push(address.locality);
-                if (address.postal_code) parts.push(address.postal_code);
-                return this.escapeHtml(parts.join(', '));
-            }
+            createCompanyTable(data) {
+                let html = `
+                    <table class="company-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="name">Company Name</th>
+                                <th>Number</th>
+                                <th class="sortable" data-sort="status">Status</th>
+                                <th class="sortable" data-sort="type">Type</th>
+                                <th class="sortable" data-sort="date">Incorporated</th>
+                                <th>Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
 
-            generateStats(companies) {
-                const currentYear = new Date().getFullYear();
-                let activeCount = 0;
-                let recentCount = 0;
-
-                companies.forEach(company => {
-                    if (company.company_status === 'active') {
-                        activeCount++;
-                    }
+                data.forEach(company => {
+                    const statusClass = company.company_status === 'active' ? 'status-active' : 'status-dissolved';
+                    const incorporationDate = company.date_of_creation ? new Date(company.date_of_creation).toLocaleDateString() : 'N/A';
                     
-                    if (company.date_of_creation) {
-                        const incorporationYear = new Date(company.date_of_creation).getFullYear();
-                        if (currentYear - incorporationYear <= 5) {
-                            recentCount++;
-                        }
-                    }
+                    html += `
+                        <tr>
+                            <td><strong>${this.escapeHtml(company.title)}</strong></td>
+                            <td>${company.company_number}</td>
+                            <td><span class="${statusClass}">${this.capitalizeFirst(company.company_status || 'Unknown')}</span></td>
+                            <td>${this.capitalizeFirst(company.company_type || 'N/A')}</td>
+                            <td>${incorporationDate}</td>
+                            <td>${company.address ? this.formatAddress(company.address) : 'N/A'}</td>
+                        </tr>
+                    `;
                 });
 
-                return { activeCount, recentCount };
+                html += '</tbody></table>';
+                return html;
             }
 
-            showLoading() {
-                document.getElementById('results').innerHTML = `
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        Searching Companies House database...
-                    </div>
-                `;
+            updateViewButtons() {
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.view === this.currentView);
+                });
             }
 
-            showError(message) {
-                document.getElementById('results').innerHTML = `
-                    <div class="error">
-                        <strong>Error:</strong> ${this.escapeHtml(message)}
-                    </div>
-                `;
+            updatePagination() {
+                const totalPages = Math.ceil(this.totalResults / this.recordsPerPage);
+                document.getElementById('paginationInfo').textContent = `Page ${this.currentPage} of ${totalPages}`;
+                document.getElementById('prevBtn').disabled = this.currentPage <= 1;
+                document.getElementById('nextBtn').disabled = this.currentPage >= totalPages;
             }
 
-            escapeHtml(text) {
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
+            async previousPage() {
+                if (this.currentPage > 1) {
+                    this.currentPage--;
+                    await this.loadPage();
+                }
             }
 
-            capitalizeFirst(str) {
-                return str.charAt(0).toUpperCase() + str.slice(1).replace(/-/g, ' ');
+            async nextPage() {
+                const totalPages = Math.ceil(this.totalResults / this.recordsPerPage);
+                if (this.currentPage < totalPages) {
+                    this.currentPage++;
+                    await this.loadPage();
+                }
             }
-        }
 
-        // Initialize the application
-        new CambridgeStartups();
-    </script>
-</body>
-</html>
+            async loadPage() {
+                this.showLoading();
+                try {
+                    const result = await this.fetchCompanies(this.currentQuery, this
