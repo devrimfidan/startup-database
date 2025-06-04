@@ -1113,3 +1113,262 @@ body {
   border-radius: 4px;
   border: 1px solid var(--color-border);
 }
+
+/* About page specific styling */
+.content-outer {
+  background-color: #fff;
+  padding: 2rem 0 4rem;
+}
+
+.page-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.content-intro {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.content-section {
+  margin-bottom: 3rem;
+}
+
+.content-section h2 {
+  color: var(--color-text-primary);
+  font-size: 1.75rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border-primary);
+  padding-bottom: 0.5rem;
+}
+
+.content-section p {
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.info-card {
+  background-color: #f0fafa;
+  border-left: 4px solid var(--color-links-primary);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.info-card p {
+  margin-bottom: 0;
+}
+
+.info-card ol, .info-card ul {
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.info-card li {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.info-card li:last-child {
+  margin-bottom: 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .features-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.feature-card {
+  background-color: var(--color-bg-primary);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.feature-card .material-icons {
+  color: var(--color-links-primary);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.feature-card p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.contact-info {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.contact-info p {
+  margin-bottom: 0.75rem;
+}
+
+.contact-info p:last-child {
+  margin-bottom: 0;
+}
+
+.last-updated {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.5rem;
+}
+
+/* Style for the back to home button */
+.btn {
+  display: inline-block;
+  background-color: var(--color-links-primary);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  margin-top: 1.5rem;
+}
+
+.btn:hover {
+  background-color: #0c7269;
+}
+
+/* Privacy Policy and Terms styling */
+.content-outer {
+  background-color: #fff;
+  padding: 2rem 0 4rem;
+}
+
+.content-body {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.highlight-box {
+  background-color: #f0fafa;
+  border-left: 4px solid var(--color-links-primary);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.highlight-box strong {
+  color: var(--color-text-primary);
+}
+
+.terms-section {
+  margin-bottom: 2.5rem;
+}
+
+.terms-section h2 {
+  color: var(--color-text-primary);
+  font-size: 1.75rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border-primary);
+  padding-bottom: 0.5rem;
+}
+
+.terms-section p {
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.terms-section ul {
+  padding-left: 1.5rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.terms-section li {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.terms-section li:last-child {
+  margin-bottom: 0;
+}
+
+.gdpr-rights ul {
+  column-count: 1;
+}
+
+@media (min-width: 768px) {
+  .gdpr-rights ul {
+    column-count: 2;
+    column-gap: 2rem;
+  }
+}
+
+.contact-info {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.contact-info p {
+  margin-bottom: 0.75rem;
+}
+
+.contact-info p:last-child {
+  margin-bottom: 0;
+}
+
+.last-updated {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.5rem;
+}
+
+.content-footer {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.btn {
+  display: inline-block;
+  background-color: var(--color-links-primary);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: #0c7269;
+}
+
+/* Banner adjustments for privacy policy */
+.banner-outer .banner-title {
+  margin-bottom: 0.5rem;
+}
