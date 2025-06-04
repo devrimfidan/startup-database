@@ -1098,7 +1098,8 @@ body {
 
 .page-btn:hover:not([disabled]) {
   background-color: var(--color-accent);
-  color: white;
+  color: #ffffff; /* Ensuring text is white on hover */
+  border-color: var(--color-accent-darker);
 }
 
 .page-btn[disabled] {

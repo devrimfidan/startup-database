@@ -4,7 +4,7 @@ class CambridgeStartups {
         this.baseUrl = 'https://api.company-information.service.gov.uk';
         this.currentPage = 1;
         this.totalPages = 1;
-        this.itemsPerPage = 20;
+        this.itemsPerPage = 15; 
         this.currentView = 'grid';
         this.companies = [];
         this.sortField = 'relevance';
