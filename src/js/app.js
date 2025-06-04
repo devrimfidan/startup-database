@@ -1,7 +1,7 @@
 class CambridgeStartups {
     constructor() {
-        // Initialize properties
-        this.baseUrl = 'https://cambridge-startups-proxy.eminfidan.workers.dev'; 
+        this.apiKey = '';
+        this.baseUrl = 'https://api.company-information.service.gov.uk';
         this.currentPage = 1;
         this.totalPages = 1;
         this.itemsPerPage = 20;
