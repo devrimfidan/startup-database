@@ -1,7 +1,7 @@
 class CambridgeStartups {
     constructor() {
-        this.apiKey = '';
-        this.baseUrl = 'https://api.company-information.service.gov.uk';
+        // Make sure this URL is correct and the worker is deployed
+        this.baseUrl = 'https://cambridge-startups-proxy.eminfidan.workers.dev'; 
         this.currentPage = 1;
         this.totalPages = 1;
         this.itemsPerPage = 20;
@@ -31,17 +31,6 @@ class CambridgeStartups {
         document.getElementById('searchQuery').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.searchCompanies();
         });
-        document.getElementById('apiKey').addEventListener('input', (e) => {
-            this.apiKey = e.target.value;
-            localStorage.setItem('ch_api_key', e.target.value);
-        });
-
-        // Load API key from localStorage if available
-        const savedApiKey = localStorage.getItem('ch_api_key');
-        if (savedApiKey) {
-            document.getElementById('apiKey').value = savedApiKey;
-            this.apiKey = savedApiKey;
-        }
         
         // Add event listeners for quick search links
         const quickSearchLinks = document.querySelectorAll('.banner-nav .banner-nav-item');
@@ -117,30 +106,29 @@ class CambridgeStartups {
 
     async searchCompanies(page = 1) {
         const query = document.getElementById('searchQuery').value.trim();
-        const apiKey = document.getElementById('apiKey').value.trim();
-
-        if (!apiKey) {
-            this.showError('Please enter your Companies House API key first.');
-            return;
-        }
+        console.log('Search query:', query);
 
         if (!query) {
             this.showError('Please enter a search term.');
             return;
         }
 
-        this.apiKey = apiKey;
         this.currentPage = page;
         this.showLoading();
 
         try {
+            console.log('Fetching companies...');
             const response = await this.fetchCompanies(query);
+            console.log('API response:', response);
             this.companies = response.items || [];
-            this.totalPages = Math.ceil(Math.min(response.total_results || 0, 400) / this.itemsPerPage);  // API max is 400 results
+            this.totalPages = Math.ceil(Math.min(response.total_results || 0, 400) / this.itemsPerPage);
+            
+            console.log(`Found ${this.companies.length} companies`);
             
             // Show controls if we have results
             document.getElementById('controlsBar').style.display = this.companies.length > 0 ? 'flex' : 'none';
             document.getElementById('pagination').style.display = this.totalPages > 1 ? 'flex' : 'none';
+            document.getElementById('stats-container').style.display = this.companies.length > 0 ? 'block' : 'none';
             
             // Extract company types for filter
             this.extractCompanyTypes();
@@ -149,39 +137,38 @@ class CambridgeStartups {
             this.applyFilters();
             
         } catch (error) {
+            console.error('Search error:', error);
             this.showError(`Search failed: ${error.message}`);
         }
     }
 
     async fetchCompanies(query) {
         const start_index = (this.currentPage - 1) * this.itemsPerPage;
-        const searchUrl = `${this.baseUrl}/search/companies?q=${encodeURIComponent(query)}&items_per_page=${this.itemsPerPage}&start_index=${start_index}`;
+        const searchUrl = `${this.baseUrl}/search?q=${encodeURIComponent(query)}&items_per_page=${this.itemsPerPage}&start_index=${start_index}`;
         
-        const response = await fetch(searchUrl, {
-            headers: {
-                'Authorization': `Basic ${btoa(this.apiKey + ':')}`
+        console.log('Fetching from URL:', searchUrl);
+        
+        try {
+            const response = await fetch(searchUrl);
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('API error:', response.status, errorText);
+                throw new Error(`API request failed: ${response.status}`);
             }
-        });
 
-        if (!response.ok) {
-            if (response.status === 401) {
-                throw new Error('Invalid API key. Please check your Companies House API key.');
-            }
-            throw new Error(`API request failed: ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            console.error('Fetch error:', error);
+            throw error;
         }
-
-        return await response.json();
     }
 
     async fetchCompanyDetails(companyNumber) {
         const detailUrl = `${this.baseUrl}/company/${companyNumber}`;
         
         try {
-            const response = await fetch(detailUrl, {
-                headers: {
-                    'Authorization': `Basic ${btoa(this.apiKey + ':')}`
-                }
-            });
+            const response = await fetch(detailUrl);
 
             if (response.ok) {
                 return await response.json();
@@ -352,8 +339,14 @@ class CambridgeStartups {
 
     async displayCompanies(companies) {
         const resultsDiv = document.getElementById('results');
+        const statsContainer = document.getElementById('stats-container');
+        const controlsBar = document.getElementById('controlsBar');
+        const pagination = document.getElementById('pagination');
 
         if (companies.length === 0) {
+            statsContainer.style.display = 'none';
+            controlsBar.style.display = 'none';
+            pagination.style.display = 'none';
             resultsDiv.innerHTML = '<div class="info">No companies found. Try a different search term or adjust your filters.</div>';
             return;
         }
@@ -361,36 +354,35 @@ class CambridgeStartups {
         // Generate stats
         const stats = this.generateStats(companies);
         
-        // Create HTML with stats in a separate container first
-        let html = `
-            <div class="stats-container">
-                <div class="stats">
-                    <div class="stat-card">
-                        <div class="stat-number">${companies.length}</div>
-                        <div class="stat-label">Companies Found</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">${stats.activeCount}</div>
-                        <div class="stat-label">Active Companies</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">${stats.recentCount}</div>
-                        <div class="stat-label">Incorporated in Last 5 Years</div>
-                    </div>
+        // Show stats in the stats container
+        statsContainer.style.display = 'block';
+        statsContainer.innerHTML = `
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">${companies.length}</div>
+                    <div class="stat-label">Companies Found</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.activeCount}</div>
+                    <div class="stat-label">Active Companies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.recentCount}</div>
+                    <div class="stat-label">Incorporated in Last 5 Years</div>
                 </div>
             </div>
         `;
 
-        // Update pagination info
-        document.getElementById('pageInfo').textContent = `Page ${this.currentPage} of ${this.totalPages}`;
-        document.getElementById('prevPage').disabled = this.currentPage <= 1;
-        document.getElementById('nextPage').disabled = this.currentPage >= this.totalPages;
+        // Show controls and pagination
+        controlsBar.style.display = 'flex';
+        pagination.style.display = 'flex';
 
-        // Then add the company display - either grid or table view
+        // Display company results in the white section
+        let html = '';
         if (this.currentView === 'grid') {
-            html += this.renderGridView(companies);
+            html = this.renderGridView(companies);
         } else {
-            html += this.renderTableView(companies);
+            html = this.renderTableView(companies);
         }
 
         resultsDiv.innerHTML = html;
@@ -399,9 +391,9 @@ class CambridgeStartups {
     renderGridView(companies) {
         let html = '<div class="company-grid">';
         
-        for (const company of companies) {
+        companies.forEach(company => {
             html += this.createCompanyCard(company);
-        }
+        });
         
         html += '</div>';
         return html;
