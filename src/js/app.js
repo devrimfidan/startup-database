@@ -1,7 +1,7 @@
 class CambridgeStartups {
     constructor() {
-        // Remove API key from client side
-        this.baseUrl = 'https://cambridge-startups-proxy.eminfidan.workers.dev'; // Replace with your worker URL
+        // Make sure this URL is correct and the worker is deployed
+        this.baseUrl = 'https://cambridge-startups-proxy.eminfidan.workers.dev'; 
         this.currentPage = 1;
         this.totalPages = 1;
         this.itemsPerPage = 20;
@@ -146,10 +146,18 @@ class CambridgeStartups {
         const start_index = (this.currentPage - 1) * this.itemsPerPage;
         const searchUrl = `${this.baseUrl}/search?q=${encodeURIComponent(query)}&items_per_page=${this.itemsPerPage}&start_index=${start_index}`;
         
-        console.log('Fetching from URL:', searchUrl);
-        
         try {
-            const response = await fetch(searchUrl);
+            console.log('Fetching from URL:', searchUrl);
+            
+            const response = await fetch(searchUrl, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                // Add these options to handle CORS issues
+                mode: 'cors',
+                credentials: 'same-origin'
+            });
             
             if (!response.ok) {
                 const errorText = await response.text();
@@ -160,7 +168,7 @@ class CambridgeStartups {
             return await response.json();
         } catch (error) {
             console.error('Fetch error:', error);
-            throw error;
+            throw new Error(`Failed to fetch: ${error.message}`);
         }
     }
 
