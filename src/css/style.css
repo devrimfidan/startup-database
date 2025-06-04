@@ -1098,7 +1098,7 @@ body {
 
 .page-btn:hover:not([disabled]) {
   background-color: var(--color-accent);
-  color: #3e3b3b; 
+  color: #92f2ed; 
   border-color: var(--color-accent-darker);
 }
 
