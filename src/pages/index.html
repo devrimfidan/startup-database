@@ -11,14 +11,14 @@
   <header class="header">
   <div class="header-content responsive-wrapper">
     <div class="header-logo">
-      <a href="/" class="logo">
+      <a href="https://devrimfidan.github.io/startup-database/src/pages/index.html" class="logo">
         <img src="../assets/images/logo.png" alt="Cambridge Startups Directory Logo" />
       </a>
     </div>
     <nav class="header-nav">
-      <a href="#" class="header-nav-item">Home</a>
-      <a href="#" class="header-nav-item">About</a>
-      <a href="#" class="header-nav-item">Resources</a>
+      <a href="index.html" class="header-nav-item">Home</a>
+      <a href="about.html" class="header-nav-item">About</a>
+      <a href="resources.html" class="header-nav-item">Resources</a>
       <a href="privacy-policy.html" class="header-nav-item">Privacy</a>
       <a href="terms-conditions.html" class="header-nav-item">Terms</a>
       <button class="menu-toggle">Menu</button>
@@ -60,9 +60,9 @@
                 <div class="option-group">
                   <label for="itemsPerPage">Results per page:</label>
                   <select id="itemsPerPage" class="select-input">
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="60">60</option>
                   </select>
                 </div>
                 
@@ -379,9 +379,15 @@
         
         <!-- Pagination controls -->
         <div class="pagination" id="pagination" style="display: none;">
-          <button id="prevPage" class="page-btn" disabled>Previous</button>
+          <button id="prevPage" class="page-btn">
+            <span class="material-icons">chevron_left</span>
+            <span>Previous</span>
+          </button>
           <span id="pageInfo">Page 1 of 1</span>
-          <button id="nextPage" class="page-btn">Next</button>
+          <button id="nextPage" class="page-btn">
+            <span>Next</span>
+            <span class="material-icons">chevron_right</span>
+          </button>
         </div>
       </div>
     </div>
